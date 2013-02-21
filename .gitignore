@@ -1,4 +1,13 @@
 *.log
 *.pot
 *.pyc
+*.swp
 local_settings.py
+scheduler_input_socket
+dnspython-1.9.4
+log.err
+log.out
+collected_static/
+nsmon-add-crontab-wrapper
+dns/
+
