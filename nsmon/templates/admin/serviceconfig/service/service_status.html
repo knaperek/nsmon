@@ -1,0 +1,111 @@
+{% extends "admin/base_site.html" %}
+{% load adminmedia admin_list i18n %}
+{# {% extends "admin/change_form.html" %} #}
+{# {% extends "admin/change_form.html" %} #}
+{# {% load adminmedia admin_list i18n %} #}
+{# {% load url from future %} #}
+{% block extrastyle %}
+{{ block.super }}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}charts.css" />
+<style type="text/css">
+    .chart_container {
+        margin-top:30px;
+        margin-bottom: 50px;
+    }
+    .chart_container h2 {
+        margin-bottom: 20px;
+    }
+    .chart_div {
+
+    }
+</style>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.selection.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.threshold.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.stack.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}duration_chart.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}counters_chart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_duration_charts('#duration_chart_container_div', '{% url admin:series-json object_id "duration" %}'); 
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_counters_charts('#counters_chart_container_div', '{% url admin:series-json object_id "counters" %}'); 
+    });
+</script>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="../../../../">{% trans 'Home' %}</a> &rsaquo; 
+    <a href="../../../">{{ app_label|capfirst }}</a> &rsaquo; 
+    <a href="../../">{{ module_name }}</a> &rsaquo; 
+    <a href="../">{{ object|truncatewords:"18" }}</a> &rsaquo; 
+    {% trans 'Service status' %}
+</div>
+{% endblock %}
+
+{% block title %}Service status | NSMon{% endblock %}
+
+{% block content %}
+<div id="content-main">
+{#   <h1>Status of service {{ object_id }}</h1> #}
+    <h1>Status of service {{ service }}</h1>
+    {% if statussummary and qcounters and lasttest_items %}
+        <p>
+            <h2>Current Status</h2>
+            {{ statussummary.get_status_changed_to_display }} (unchanged for {{ statussummary.status_duration }}, since {{ statussummary.timestamp }})
+
+            <h2>Service Condition</h2>
+            <table>
+                {% for field in qcounters %}
+                <tr>
+                    <td>{{ field.label }}</td>
+                    <td>{{ field.value }} %</td>
+                </tr>
+                {% empty %}
+                Unknown
+                {% endfor %}
+            </table>
+
+            <h2>Last Test</h2>
+            <table>
+                {% for field in lasttest_items %}
+                <tr>
+                    <td>{{ field.label }}</td>
+                    <td>{{ field.value }}</td>
+                </tr>
+                {% empty %}
+                There's no TestResult record for this service yet. Make sure it has <a href="{% url admin:serviceconfig_testingplan_changelist %}">Testing Plan</a> configured.
+                {% endfor %}
+            </table>
+        </p>
+
+        <div class="chart_container">
+            <h2>Latency chart</h2>
+            <div class="chart_div" id="duration_chart_container_div"></div>
+        </div>
+
+        <div class="chart_container">
+            <h2>Condition chart</h2>
+            <div class="chart_div" id="counters_chart_container_div"></div>
+        </div>
+
+
+    {% else %}
+{#         Some of required context variables are None #}
+        <br />
+        There's no TestResult record for this service yet. Make sure it has <a href="{% url admin:serviceconfig_testingplan_changelist %}">Testing Plan</a> configured.
+    {% endif %}
+
+{% endblock %}
+

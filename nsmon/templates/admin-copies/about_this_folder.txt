@@ -1,0 +1,8 @@
+As it turns out, it seems that it is impossible to override (just override, not completely replace) some admin templates, such as index.html.
+It is impossible to override index.html template. When trying, error is raised informing about max. recursion attained - which means, that template is extending from itself.
+Used was tag {% extend admin/index.html %}
+While this is working with most other templates, like change_list.html, it's not working with index.html template. This template is also not listed in django documentation as can-be-overrided-template, instead, there is stated, that this template should be override by another way (https://docs.djangoproject.com/en/dev/ref/contrib/admin/#templates-which-may-be-overridden-per-app-or-model)
+
+So, this folder is a little workaround. It stores original admin templates (copied from /usr/share/.../django/contrib/admin/templates/admin...). These copies are refered to from other templates, such as custom index.html template. So custom (my own) index.html template does not have to extend from admin/index.html (which would lead to described error instead of proper extending from shared django libs), but it extends from this one.
+
+When migrating to newer versions of django, these copies are expected to be replaced with newer versions (unless it breaks some compatibility).

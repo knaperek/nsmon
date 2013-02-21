@@ -1,0 +1,13 @@
+Warning: Service {{ service }} changed status to {{ service.current_status }}.
+
+{% if others %}
+Other services might also require your attention:
+{% for other_service in others %}
+Service {{ other_service }}: {{ other_service.current_status }}
+{% endfor %}
+
+{% endif %}
+Please follow the link below to see the details.
+http://{{ site }}{% url manager-overview %}
+
+

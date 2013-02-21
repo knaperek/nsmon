@@ -1,0 +1,25 @@
+{% extends "admin/login.html" %}
+{# {% extends "admin/base.html" %} #}
+
+{% block title %}NSMon | Registration complete{% endblock %}
+
+{# {% block breadcrumbs %} {% endblock %} #}
+
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+
+{% block branding %}
+<h1 id="site-name">NSMon registration complete</h1>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    Thank you for your registration.<br /><br />
+    Please check your e-mail for activation link.
+  </div>
+{% endblock %}

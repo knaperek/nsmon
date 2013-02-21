@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% load adminmedia admin_list i18n %}
+
+{# Change Form for serviceconfig/server #}
+{# {% load i18n %} #}
+
+{# Pridanie linku na related services of displayed server #}
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="{% url admin:serviceconfig_service_changelist %}?server__id__exact={{ object_id }}" class="historylink">Related services</a></li>
+    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+    {% if has_absolute_url %}
+        <li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">
+            {% trans "View on site" %}</a>
+        </li>
+    {% endif%}
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}

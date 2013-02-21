@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+# 
+# Enque test given on command line by writing it to Scheduler's input through unix socket
+# 
+import sys
+import subprocess
+import os
+import socket
+
+INPUT_SOCKET_FILENAME = 'scheduler_input_socket' # must be same as scheduler's
+
+def main():
+    # change current working directory
+    os.chdir(os.path.dirname(os.path.realpath(__file__))) # follows symlinks (from /usr/bin...)
+    print('Dbg: nsmon_enqueue {} (in {})'.format(' '.join(sys.argv[1:]), os.getcwd()))
+
+    if len(sys.argv) == 2:
+        serviceID = sys.argv[1]
+        try:
+            s = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+            s.sendto(serviceID, socket.MSG_DONTWAIT, INPUT_SOCKET_FILENAME)
+        except socket.error as err:
+            raise  # TODO
+    else:
+        print('Wrong number of arguments supplied!')
+        exit(1)
+
+
+if __name__ == '__main__':
+    main()
+

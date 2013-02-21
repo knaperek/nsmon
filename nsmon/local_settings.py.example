@@ -1,0 +1,22 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'nsmondb',                      # Or path to database file if using sqlite3.
+        'USER': 'nsmon',                      # Not used with sqlite3.
+        'PASSWORD': '<PASSWORD>',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '<HOST>'
+EMAIL_HOST_USER = '<USER>'
+EMAIL_HOST_PASSWORD = '<PASSWORD>'
+EMAIL_USE_TLS = True
+
+ADMINS = ( # used for bug reports
+    ('<ADMIN NAME>', 'user@example.com'),
+)

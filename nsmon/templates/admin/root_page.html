@@ -1,0 +1,23 @@
+{% extends "admin/login.html" %}
+{# {% extends "admin/base.html" %} #}
+
+{% block title %}Log in or register | NSMon{% endblock %}
+
+{# {% block breadcrumbs %} {% endblock %} #}
+
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">Welcome to NSMon</h1>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+      Please <a href="{% url admin:index %}">log in</a> or <a href="{% url registration_register %}">register</a>.
+  </div>
+{% endblock %}

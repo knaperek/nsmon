@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+#
+# Author: Jozef Knaperek
+#
+# Helper tool for adding crontab entries to /etc/cron.d directory
+# Each added file is binded to one NSMon's User, so every user has
+# all of his Testing Plans entries merged into a single file.
+# This has also security benefit, because no user can affect others.
+# 
+# Since CRON checks for all files in /etc/cron.d directory and requires
+# them to be owned by root user, it is necessary to add files in this
+# directory as superuser. Special "wrapper" binarry file is used for
+# this purpose which is created during NSMon's installation and has
+# setuid bit set. This binnary simply executes this python script,
+# passing it specified argument (NSMon's user) and also std pipes.
+# This script is then responsible for creating/modifying correspondent
+# file with data read on it's stdin (after doing simple security-related
+# transformation consisting of adding the User column, which is
+# always NSMon's project user - 'nsmon'). Files created by NSMon
+# in /etc/cron.d has naming pattern nsmon_*****, where ***** is NSMon's
+# User's username.
+#
+# 
+# Usage: 1 argument specifying (virutal) NSMon's User's username
+#        ---> crontab passed on stdin (without "user" column)
+#
+
+import os, sys
+from stat import S_IRUSR, S_IWUSR, S_IRGRP, S_IROTH
+
+CROND_DIRECTORY = '/etc/cron.d'
+CRONTAB_PREFIX = 'nsmon'
+USER = 'nsmon'
+
+def main():
+    if len(sys.argv) != 2:
+        sys.stderr.write('Wrong number of parameters\n')
+        exit(1)
+
+    nsmon_virtual_user = sys.argv[1]
+    filename = '_'.join([CRONTAB_PREFIX, nsmon_virtual_user])
+    filepath = os.path.join(CROND_DIRECTORY, filename)
+
+    with open(filepath, 'w') as fd:
+        fd.write("# NSMon's crontab entry for user ID={}\n".format(nsmon_virtual_user))
+        fd.write('MAILTO=""\n')
+        for line in sys.stdin:
+            columns = line.split(None, 5)
+            nCols = len(columns) # number of columns in line
+            if nCols == 0: # blank line. Ignored.
+                continue
+            elif nCols != 6:
+                sys.stderr.write('Wrong number of columns in crontab entry ({})\n'.format(nCols))
+                exit(1)
+            columns.insert(5, USER)
+            new_line = ' '.join(columns)
+            fd.write(new_line)
+    mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
+    os.chmod(filepath, mode)
+
+if __name__ == '__main__':
+    main()
+

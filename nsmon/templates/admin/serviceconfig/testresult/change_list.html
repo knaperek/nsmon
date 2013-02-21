@@ -1,0 +1,20 @@
+{% extends "admin/change_list.html" %}
+{% load adminmedia admin_list i18n %}
+{% load url from future %}
+{% block extrastyle %}
+  {{ block.super }}
+  <style type="text/css">
+    #changelist table thead th.action-checkbox-column,
+    #changelist table tbody td.action-checkbox {
+      display: none;
+    }
+  </style>
+{% endblock %}
+
+{% block title %}
+{{ cl.opts.verbose_name_plural|capfirst }} | NSMon {# TODO: auto generate the title #}
+{% endblock %}
+
+{% block content_title %}
+<h1>{{ cl.opts.verbose_name_plural|capfirst }} history overview</h1>
+{% endblock %}

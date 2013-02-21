@@ -1,0 +1,114 @@
+{% extends "admin-copies/index.html" %}
+{% load i18n admin_static %}
+
+{% block content %}
+<div id="content-main">
+{% if app_list %}
+    {% for app in app_list %}
+        {% if app.name == "Serviceconfig" and not user.is_superuser %}
+{#             Special list for common user #}
+
+{#             Logs section #}
+            <div class="module">
+                <table summary="Models available in the bar application.">
+                    <caption><a href="{{ app.app_url }}" class="section">Logs</a></caption>
+
+{#                     # Manager overview link #}
+                    <tr>
+                        <th scope="row"><a href="{% url manager-overview %}">>> Status overview <<</a></th>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    {% for model in app.models %}
+                        {% if model.name == "Test results" or model.name == "Service status changes" %}
+                            <tr>
+                                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+{#             Config section #}
+            <div class="module">
+                <table summary="Models available in the foo application.">
+                    <caption><a href="{{ app.app_url }}" class="section">Configs</a></caption>
+
+                    {% for model in app.models %}
+{#                         {% if model.name == "Services" or model.name == "Servers" or model.name == "DB cleanup policies" or model.name == "Testing plans" %} #}
+                        {% if model.name == "Services" or model.name == "Servers" or model.name == "Testing plans" %}
+                            <tr>
+                            {% if model.perms.change %}
+                                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                            {% else %}
+                                <th scope="row">{{ model.name }}</th>
+                            {% endif %}
+
+                            {% if model.perms.add %}
+                                <td><a href="{{ model.admin_url }}add/" class="addlink">{% trans 'Add' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+
+                            {% if model.perms.change %}
+                                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                            </tr>
+{#                             <tr> #}
+{#                                 <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th> #}
+{#                                 <td>&nbsp;</td> #}
+{#                                 <td>&nbsp;</td> #}
+{#                             </tr> #}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+        {% else %}
+{#          ###   Not superuser or not Serviceconfig app #}
+
+            <div class="module">
+                <table summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
+                    <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
+
+                    {% for model in app.models %}
+        {#             {{ model.admin_url }} #}
+        {#             {{ model.name|truncatewords:1 }}  #}
+                        {% if model.name|truncatewords:1 != "Configs: ..." %}
+                            <tr>
+                            {% if model.perms.change %}
+                                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                            {% else %}
+                                <th scope="row">{{ model.name }}</th>
+                            {% endif %}
+
+                            {% if model.perms.add %}
+                                <td><a href="{{ model.admin_url }}add/" class="addlink">{% trans 'Add' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+
+                            {% if model.perms.change %}
+                                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+</div>
+{% endblock %}
+
+

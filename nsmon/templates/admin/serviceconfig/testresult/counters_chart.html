@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<style type="text/css"></style>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.selection.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.threshold.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.stack.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}counters_chart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_counters_charts('#counters_chart_container_div', '{% url admin:series-json "counters" %}'); 
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="counters_chart_container_div"></div>
+{% endblock %}
+
+
+
+

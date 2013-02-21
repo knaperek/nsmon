@@ -1,0 +1,24 @@
+{% extends "admin/login.html" %}
+{# {% extends "admin/base.html" %} #}
+
+{% block title %}NSMon | Activation complete{% endblock %}
+
+{# {% block breadcrumbs %} {% endblock %} #}
+
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">NSMon activation complete</h1>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    Your account is now active.<br /><br />
+    You can log in <a href="{% url admin:index %}">here</a>.
+  </div>
+{% endblock %}

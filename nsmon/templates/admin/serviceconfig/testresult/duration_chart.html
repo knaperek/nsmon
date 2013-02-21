@@ -1,0 +1,24 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<style type="text/css"></style>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.selection.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.threshold.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}duration_chart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_duration_charts('#duration_chart_container_div', '{% url admin:series-json "duration" %}'); 
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="duration_chart_container_div"></div>
+{% endblock %}
+
+
+
+

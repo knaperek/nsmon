@@ -1,0 +1,41 @@
+{% extends "admin/login.html" %}
+{# {% extends "admin/base.html" %} #}
+
+{% block title %}NSMon | Registration{% endblock %}
+
+{# {% block breadcrumbs %} {% endblock %} #}
+
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+  .login form input[type=text], .login form input[type=password] {
+    width: 14em;
+  }
+</style>
+{% endblock %}
+
+
+{% block branding %}
+<h1 id="site-name">NSMon registration</h1>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    <form action="" method="post">
+      {% csrf_token %}
+{#         {{ form.as_p }} #}
+
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <div class="form-row">
+            {{ field.errors }}
+            {{ field.label_tag }}{{ field }}
+        </div>
+      {% endfor %}
+      <div class="submit-row">
+        <input type="submit" value="Create the account">
+      </div>
+    </form>
+  </div>
+{% endblock %}
+

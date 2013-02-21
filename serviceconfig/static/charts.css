@@ -1,0 +1,35 @@
+.main_chart_div {
+	width:900px;
+	height:400px
+}
+.overview_chart_div {
+	margin-left:30px;
+   	margin-top:25px;
+	width:850px;
+	height:70px
+}
+.chart_aggregation_info {
+	/*color:red;*/
+	/*margin-left:300px;*/
+	margin-top:10px;
+	/*padding-top:200px;*/
+	width:900px;
+	line-height:50px;
+	/*height:50px;*/
+	text-align:center;
+
+}
+.chart_button_reset {
+	/*color:blue;*/
+	/*display:block;*/
+	/*float: left;*/
+	/*display: block;*/
+	/*position: relative;*/
+	/*margin:left: 130px;*/
+	width:900px;
+	text-align:center;
+}
+.chart_button_reset button {
+	display:inline;
+}
+

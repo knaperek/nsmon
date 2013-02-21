@@ -1,0 +1,67 @@
+{% extends "admin/base_site.html" %}
+{% load adminmedia admin_list i18n %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}charts.css" />
+<style type="text/css">
+    .chart_container {
+        margin-top:30px;
+        margin-bottom: 50px;
+    }
+    .chart_container h2 {
+        margin-bottom: 20px;
+    }
+    .chart_div {
+
+    }
+</style>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.selection.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.threshold.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.stack.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}duration_chart.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}counters_chart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_duration_charts('#duration_chart_container_div', '{% url admin:series-json "duration" %}'); 
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        insert_counters_charts('#counters_chart_container_div', '{% url admin:series-json "counters" %}'); 
+    });
+</script>
+{% endblock %}
+
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url admin:index %}">{% trans 'Home' %}</a> &rsaquo; 
+    {% trans 'Charts' %}
+</div>
+{% endblock %}
+
+{% block title %}Charts | NSMon{% endblock %}
+
+{% block content %}
+<div id="content-main">
+
+        <div class="chart_container">
+            <h2>Latency chart</h2>
+            <div class="chart_div" id="duration_chart_container_div"></div>
+        </div>
+
+        <div class="chart_container">
+            <h2>Condition chart</h2>
+            <div class="chart_div" id="counters_chart_container_div"></div>
+        </div>
+
+{% endblock %}
+

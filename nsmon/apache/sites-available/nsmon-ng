@@ -1,0 +1,23 @@
+#
+# Use this setting when deploying without wsgi daemon mode. Drawback: WSGIPythonPath directive cannot be used in VirtualHost block => this setting will be probably global for all projects running in apache
+# WSGIPythonPath /var/bc/ng-env/lib/python2.7/site-packages
+#
+
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	#ServerName localhost
+
+	# NSMon:
+        Alias /static /var/bc/nsmon/nsmon/collected_static
+        WSGIScriptAlias / /var/bc/nsmon/nsmon/wsgi.py
+	WSGIDaemonProcess nsmon user=nsmon group=nsmon threads=5 python-path=/var/bc/ng-env/lib/python2.7/site-packages
+	WSGIProcessGroup nsmon
+
+	<Directory /var/bc/nsmon/nsmon>
+	<Files wsgi.py>
+	Order deny,allow
+	Allow from all
+	</Files>
+	</Directory>
+
+</VirtualHost>

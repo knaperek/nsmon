@@ -1,0 +1,126 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<style type="text/css"></style>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+
+{#        $.plot($("#placeholder"), data, { yaxis: { max: 100 } }); #}
+<script type="text/javascript">
+    function onDataReceived(data) {
+
+        var series_object = {
+{#             color: color or number #}
+            data: data,
+{#             label: string #}
+{#             lines: specific lines options #}
+{#             bars: specific bars options #}
+{#             points: specific points options #}
+{#             xaxis: number #}
+{#             yaxis: number #}
+{#             clickable: boolean #}
+{#             hoverable: boolean #}
+{#             shadowSize: number #}
+          }
+
+        var options = { 
+            xaxis: {
+                mode: "time", 
+{#                 minTickSize: [1, "second"], #}
+{#                 minTickSize: [1, "minute"], #}
+{#                 tickDecimals: 1, #}
+                minTickSize: [1, "minute"], 
+{#                 tickColor: 1, #}
+{#                 ticks: [5, "minute"], #}
+{#                 tickSize: 1, #}
+
+                   },
+            series: {
+                lines: { 
+                    show: true,
+                    fill: true,
+                    // fillColor: 0.9,
+                    // steps: true,
+                },
+{#                 points: { show: true }, #}
+{#                 threshold: { below: 0.1, color: "rgb(200, 20, 30)" }, #}
+                points: { 
+                    radius: 2,
+                    show: true,
+                },
+                bars: {
+{#                     show: true, #}
+                    // horizontal: true,
+                },
+{#                 shadowSize: 0, #}
+            },
+
+{#           lines: { show: true, fill: true, fillColor: "rgba(255, 255, 255, 0.8)" }, #}
+{#           points: { show: true, fill: false }, #}
+            selection: {
+                mode: "x"
+            },
+            grid: {
+                // aboveData: true,
+                // color: 1,
+                // labelMargin: 50,
+                // borderWidth: 0,
+                hoverable: true,
+                // clickable: true,
+            },
+        }
+       $.plot($("#placeholder"), data, options);
+{#        $.plot($("#placeholder"), series_object, options); #}
+    }
+
+    $(document).ready(function(){
+            $.ajax({
+                url: "/admin/serviceconfig/testresult/duration-json2/",
+                method: 'GET',
+                dataType: 'json',
+                success: onDataReceived
+                });
+            });
+
+
+{#                var series = [ [[0, 0], [1, 1], [3, 6]] ] #}
+{#                if (series == data) { #}
+{#                    alert("ok"); #}
+{#                } #}
+{#                else { #}
+{#                    alert("zle"); #}
+{#                    alert(series); #}
+{#                    alert(data); #}
+{#                } #}
+{#                $.plot($("#placeholder"), data, { yaxis: { max: 100 } }); #}
+{#                $.plot($("#placeholder"), series, { yaxis: { max: 100 } }); #}
+{#           }); #}
+{#      }); #}
+</script>
+{% endblock %}
+
+{% block content %}
+
+{#         <script type="text/javascript" src="jquery.js"></script> #}
+{#         <script type="text/javascript" src="flot/jquery.flot.js"></script> #}
+{#         <script type="text/javascript"> #}
+{#             $(document).ready(function(){ #}
+{#                   alert('Load was performed.'); #}
+{#              }); #}
+{#         </script> #}
+    
+
+        <div id="placeholder" style="width:600px;height:300px"></div>
+{#         <a href="#">bla</a> #}
+
+{% endblock %}
+
+
+
+
+{# Note that for the time mode "tickSize" and "minTickSize" are a bit #}
+{# special in that they are arrays on the form "[value, unit]" where unit #}
+{# is one of "second", "minute", "hour", "day", "month" and "year". So #}
+{# you can specify #}
+

@@ -1,0 +1,118 @@
+{% extends "admin/change_list.html" %}
+{% load adminmedia admin_list i18n %}
+{# {% extends "admin/index.html" %} #}
+{# {% extends "admin/base_site.html" %} #}
+
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+.tr_caption {
+  padding-top: 30px;
+}
+.tr_caption th {
+  margin: 0;
+  padding: 2px 5px 3px 5px;
+  font-size: 11px;
+  text-align: left;
+  font-weight: bold;
+  background: #7CA0C7 url({{ STATIC_URL }}default-bg.gif) top left repeat-x;
+  color: white;
+}
+.tr_head th {
+  color: #666;
+  padding: 2px 5px;
+  font-size: 11px;
+  background: #E1E1E1 url({{ STATIC_URL }}nav-bg.gif) top left repeat-x;
+  border-left: 1px solid #DDD;
+  border-bottom: 1px solid #DDD; 
+}
+
+.td_error {
+  color: red;
+}
+.td_none {
+  color: orange;
+}
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="../">{% trans 'Home' %}</a> &rsaquo; 
+    {% trans 'Overview' %}
+</div>
+{% endblock %}
+
+{% block title %}NSMon Manager Overview{% endblock %}
+{% block content_title %}<h1>Services Overview</h1>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div id="changelist">
+
+    {% regroup services by server as server_list %}
+
+{#     <ul> #}
+{#       {{ server_list|unordered_list }} #}
+{#     </ul> #}
+
+    <div class="module">      
+      <table>
+        <tbody>
+          {% for server in server_list %}
+            {% if forloop.counter0 %}
+              <tr><td colspan="6">&nbsp;</td></tr>
+            {% endif %}
+            <tr class="tr_caption">
+              <th colspan="6">{{ server.grouper }}</th>
+            </tr>
+            <tr class="tr_head">
+              <th>Service</th>
+              <th>Status</th>
+              <th>Last changed</th>
+              <th>Duration</th>
+              <th>OK</th>
+              <th>Enabled</th>
+            </tr>
+
+            {% for service in server.list %}
+              <tr class="tr_status_{{ service.last_summary.status_changed_to }}">
+                <th><a href="{% url admin:service-status-view service.pk %}">{{ service.get_service_type_display }}</a></th>
+                {% if service.current_status == None %}
+                  <td class="td_none">
+                {% else %}
+                  {% if service.current_status != "OK" %}
+                    <td class="td_error">
+                  {% else %}
+                    <td> 
+                  {% endif %}
+                {% endif %}
+                  {{ service.current_status }}
+                </td>
+                <td> {{ service.last_summary.timestamp }} </td>
+                <td> {{ service.last_summary.status_duration }} </td>
+                <td>
+                  {% if service.last_summary.is_status_ok %}
+                    <img src="{{ STATIC_URL }}icon-yes.gif" alt="True" />
+                  {% else %}
+                    <img src="{{ STATIC_URL }}icon-no.gif" alt="False" />
+                  {% endif %}
+                </td>
+                <td> 
+                  {% if service.enabled %}
+                    <img src="{{ STATIC_URL }}icon-yes.gif" alt="True" />
+                  {% else %}
+                    <img src="{{ STATIC_URL }}icon-no.gif" alt="False" />
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
