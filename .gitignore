@@ -10,4 +10,5 @@ log.out
 collected_static/
 nsmon-add-crontab-wrapper
 dns/
+env/
 
