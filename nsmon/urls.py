@@ -16,5 +16,5 @@ urlpatterns = patterns('',
     url(r'^$', 'serviceconfig.admin_views.root_page', name='root-page'),
     url(r'^admin/overview/$', 'serviceconfig.admin_views.manager_overview', name='manager-overview'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    # url(r'^accounts/', include('registration.backends.default.urls')),
 )
