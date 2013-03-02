@@ -8,12 +8,12 @@
   <ul class="object-tools">
 {# 	<li><a href="{% url serviceconfig.admin_views.service_status id=1 %}" class="historylink">Service status</a></li> #}
 {# 	<li><a href="{% url name-rtest %}" class="historylink">Service status</a></li> #}
-	<li><a href="{% url admin:service-status-view object_id %}" class="historylink">Service status</a></li>
+	<li><a href="{% url "admin:service-status-view" object_id %}" class="historylink">Service status</a></li>
 {# 	<li><a href="{% url admin:index %}" class="historylink">Service config</a></li> #}
 {# 	<li><a href="{% url admin:app_list app_label="serviceconfig" %}" class="historylink">app list</a></li> #}
 {# 	<li><a href="{% url admin:app_list "serviceconfig" %}" class="historylink">app list</a></li> #}
 {# 	<li><a href="{% url admin:app_list app_label %}" class="historylink">app list</a></li> #}
-	<li><a href="{% url admin:redirect-to-stc object_id %}" class="historylink">Service specific config</a></li>
+	<li><a href="{% url "admin:redirect-to-stc" object_id %}" class="historylink">Service specific config</a></li>
     <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
 {# 	{{ app_label }} #}
 {# 	{{ module_name }} #}

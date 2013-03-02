@@ -1,7 +1,6 @@
 {% extends "admin/change_form.html" %}
 {# change_form for TestResult #}
-{% load i18n admin_modify adminmedia %}
-{# {% load url from future %} #}
+{% load i18n admin_modify admin_static %}
 {# {% include "../hacks/change_form_no_submit_rowss.html" %} #}
 {# {% ssi "../hacks/change_form_no_submit_row.html" parsed %} #}
 
@@ -122,7 +121,7 @@
 {% block object-tools %}
 {% if change %}{% if not is_popup %}
   <ul class="object-tools">
-	<li><a href="{% url admin:service-status-view 1 %}" class="historylink">Current status</a></li>
+	<li><a href="{% url "admin:service-status-view" 1 %}" class="historylink">Current status</a></li>
     <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
 {# 	{{ app_label }} #}
 {# 	{{ module_name }} #}

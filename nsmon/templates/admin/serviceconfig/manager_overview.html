@@ -1,5 +1,5 @@
 {% extends "admin/change_list.html" %}
-{% load adminmedia admin_list i18n %}
+{% load i18n admin_static admin_list %}
 {# {% extends "admin/index.html" %} #}
 {# {% extends "admin/base_site.html" %} #}
 
@@ -77,7 +77,7 @@
 
             {% for service in server.list %}
               <tr class="tr_status_{{ service.last_summary.status_changed_to }}">
-                <th><a href="{% url admin:service-status-view service.pk %}">{{ service.get_service_type_display }}</a></th>
+                <th><a href="{% url "admin:service-status-view" service.pk %}">{{ service.get_service_type_display }}</a></th>
                 {% if service.current_status == None %}
                   <td class="td_none">
                 {% else %}

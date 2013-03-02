@@ -1,9 +1,6 @@
 {% extends "admin/base_site.html" %}
-{% load adminmedia admin_list i18n %}
+{% load i18n admin_static admin_list %}
 {# {% extends "admin/change_form.html" %} #}
-{# {% extends "admin/change_form.html" %} #}
-{# {% load adminmedia admin_list i18n %} #}
-{# {% load url from future %} #}
 {% block extrastyle %}
 {{ block.super }}
 <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}charts.css" />
@@ -33,12 +30,12 @@
 <script type="text/javascript" src="{{ STATIC_URL }}counters_chart.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        insert_duration_charts('#duration_chart_container_div', '{% url admin:series-json object_id "duration" %}'); 
+        insert_duration_charts('#duration_chart_container_div', '{% url "admin:series-json" object_id "duration" %}'); 
     });
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-        insert_counters_charts('#counters_chart_container_div', '{% url admin:series-json object_id "counters" %}'); 
+        insert_counters_charts('#counters_chart_container_div', '{% url "admin:series-json" object_id "counters" %}'); 
     });
 </script>
 
@@ -85,7 +82,7 @@
                     <td>{{ field.value }}</td>
                 </tr>
                 {% empty %}
-                There's no TestResult record for this service yet. Make sure it has <a href="{% url admin:serviceconfig_testingplan_changelist %}">Testing Plan</a> configured.
+                There's no TestResult record for this service yet. Make sure it has <a href="{% url "admin:serviceconfig_testingplan_changelist" %}">Testing Plan</a> configured.
                 {% endfor %}
             </table>
         </p>
@@ -104,7 +101,7 @@
     {% else %}
 {#         Some of required context variables are None #}
         <br />
-        There's no TestResult record for this service yet. Make sure it has <a href="{% url admin:serviceconfig_testingplan_changelist %}">Testing Plan</a> configured.
+        There's no TestResult record for this service yet. Make sure it has <a href="{% url "admin:serviceconfig_testingplan_changelist" %}">Testing Plan</a> configured.
     {% endif %}
 
 {% endblock %}
