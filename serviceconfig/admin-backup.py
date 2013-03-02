@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 from django.db.models import Sum, Avg, Min, Max, Count # aggregation/annotation functions # TODO: import only those needed
 from django.http import HttpResponse
-from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls import patterns, url, include
 from django.shortcuts import render_to_response, render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.core import serializers
