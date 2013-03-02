@@ -22,3 +22,5 @@ ADMINS = ( # used for bug reports
 )
 
 MANAGERS = ADMINS
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
