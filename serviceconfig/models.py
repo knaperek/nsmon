@@ -678,30 +678,32 @@ class ServiceRequirements(models.Model):
 
 
 
-def validate_CRON_string(value):
-    """ Validation for CRON string in TestingPlan """
-    if value.strip() != value:
-        raise ValidationError('Leading nor trailing spaces are allowed')
-    columns = value.split()
-    if columns != value.split(' '):
-        raise ValidationError('Use only a single space as a column separator')
+# def validate_CRON_string(value):
+#     """ Validation for CRON string in TestingPlan """
+#     if value.strip() != value:
+#         raise ValidationError('Leading nor trailing spaces are allowed')
+#     columns = value.split()
+#     if columns != value.split(' '):
+#         raise ValidationError('Use only a single space as a column separator')
 
-    if len(columns) != 5:
-        raise ValidationError('Entry has to consist of exactly 5 columns')
+#     if len(columns) != 5:
+#         raise ValidationError('Entry has to consist of exactly 5 columns')
 
-    pattern = r'^(\*|\d+(-\d+)?(,\d+(-\d+)?)*)(/\d+)?$'
-    p = re.compile(pattern)
-#     for c in columns:
-    for i, c in zip(range(len(columns)), columns): # foreach with iteration coutner (i)
-        if not p.match(c):
-            raise ValidationError("Incorrect value {} in column {}".format(c, i+1))
+#     pattern = r'^(\*|\d+(-\d+)?(,\d+(-\d+)?)*)(/\d+)?$'
+#     p = re.compile(pattern)
+# #     for c in columns:
+#     for i, c in zip(range(len(columns)), columns): # foreach with iteration coutner (i)
+#         if not p.match(c):
+#             raise ValidationError("Incorrect value {} in column {}".format(c, i+1))
 
 class TestingPlan(models.Model):
     """ CRON proxy """
     service = models.ForeignKey(Service)
 
     description = models.CharField(max_length = 100) # consider blank=True, null=True
-    CRON_string = models.CharField(max_length = 100, default='* * * * *', help_text="Minute Hour Day Month Weekday", validators=[validate_CRON_string])
+    # CRON_string = models.CharField(max_length = 100, default='* * * * *', help_text="Minute Hour Day Month Weekday", validators=[validate_CRON_string])
+    import cronfield.models
+    CRON_string = cronfield.models.CronField()
     allowed_delay = models.PositiveSmallIntegerField('max. delay', default=5, help_text='minutes') # minutes
 
     def __unicode__(self):
