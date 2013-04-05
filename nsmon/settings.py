@@ -147,8 +147,8 @@ LOGGING = {
 INTERNAL_IPS = ('127.0.0.1',)
 
 
-# Registration app  # obsolete
-# ACCOUNT_ACTIVATION_DAYS = 7
+# Registration app
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # Import custom local settings from local_settings.py
 try:
