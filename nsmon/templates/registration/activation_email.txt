@@ -1,7 +1,7 @@
 Welcome to NSMon project, running on {{ site }}.
 To proceed with activation of your account, please follow the link below:
 
-http://{{ site }}{% url registration_activate activation_key %}
+http://{{ site }}{% url 'registration_activate' activation_key %}
 
 Note: The activation link expires in {{ expiration_days }} days.
 
