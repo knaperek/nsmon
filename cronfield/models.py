@@ -2,10 +2,10 @@
 Simple CRON field providing nice javascript-enabled User Interface and Cron format validation.
 
 """
-__author__ = "Jozef Knaperek and Emilia Knaperekova"
+__author__ = "Jozef Knaperek & Emilia Knaperekova"
 __license__ = "GNU GPL"
 __maintainer__ = "Jozef Knaperek"
-__status__ = "Beta"
+__status__ = "Alfa"
 
 
 import re
