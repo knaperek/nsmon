@@ -150,6 +150,8 @@ INTERNAL_IPS = ('127.0.0.1',)
 # Registration app
 ACCOUNT_ACTIVATION_DAYS = 7
 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
 # Import custom local settings from local_settings.py
 try:
     from local_settings import *
